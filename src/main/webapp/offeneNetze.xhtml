@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Ghost Net Fishing - Offene Geisternetze</title>
+    <h:outputStylesheet name="css/styles.css"/>
+</h:head>
+<h:body>
+    <header>
+        <h1>Ghost Net Fishing</h1>
+        <nav>
+            <h:link outcome="/index.xhtml" value="Start"/>
+            <h:link outcome="/geisternetzMelden.xhtml" value="Geisternetz melden"/>
+            <h:link outcome="/offeneNetze.xhtml" value="Offene Geisternetze"/>
+        </nav>
+    </header>
+    <main>
+        <h:messages globalOnly="false" styleClass="messages" layout="table"/>
+
+        <h2>Offene Geisternetze</h2>
+        <p>Alle Geisternetze, die noch nicht geborgen oder als verschollen gemeldet sind.</p>
+        <!-- Weltkarte (Story 5) hier evtl. später als zusätzliche Ansicht -->
+
+        <h:form id="aktionForm">
+            <div class='actor-panel'>
+                <strong>Deine Angaben</strong> (Für die Bergung eintragen bzw. Netz als verschollen melden)
+                <div class="form-row">
+                    <h:outputLabel for="eigenerName" value="Name"/>
+                    <h:inputText id="eigenerName" value="#{geisternetzListeBean.eigenerName}"/>
+                </div>
+                <div class="form-row">
+                    <h:outputLabel for="eigeneTelefonnummer" value="Telefonnummer"/>
+                    <h:inputText id="eigeneTelefonnummer" value="#{geisternetzListeBean.eigeneTelefonnummer}"/>
+                </div>
+            </div>
+            <h:dataTable value="#{geisternetzListeBean.offeneNetze}" var="netz" border="0">
+                <h:column>
+                    <f:facet name="header">Standort (GPS)</f:facet>
+                    #{netz.breitengrad}, #{netz.längengrad}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Größe</f:facet>
+                    #{netz.geschätzteGröße.bezeichnung}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Status</f:facet>
+                    <span class="status-#{netz.status}">#{netz.status.bezeichnung}</span>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Gemeldet von</f:facet>
+                    #{netz.gemeldetVon.anonym ? 'anonym' : netz.gemeldetVon.name}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Bergung durch</f:facet>
+                    #{netz.bergungDurch != null ? netz.bergungDurch.name : '-'}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Aktionen</f:facet>
+
+                    <h:commandButton value="Für Bergung eintragen"
+                                      rendered="#{netz.status == 'GEMELDET'}"
+                                      action="#{geisternetzListeBean.fürBergungEintragen}">
+                        <f:setPropertyActionListener target="#{geisternetzListeBean.ausgewählteNetzId}" value="#{netz.id}"/>
+                    </h:commandButton>
+
+                    <h:commandButton value="Als geborgen melden"
+                                      rendered="#{netz.status == 'BERGUNG_BEVORSTEHEND'}"
+                                      action="#{geisternetzListeBean.alsGeborgenMelden}">
+                        <f:setPropertyActionListener target="#{geisternetzListeBean.ausgewählteNetzId}" value="#{netz.id}"/>
+                    </h:commandButton>
+                    <h:commandButton value="Als verschollen melden" styleClass="danger"
+                                      action="#{geisternetzListeBean.alsVerschollenMelden}">
+                        <f:setPropertyActionListener target="#{geisternetzListeBean.ausgewählteNetzId}" value="#{netz.id}"/>
+                    </h:commandButton>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </main>
+</h:body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>Ghost Net Fishing - Startseite</title>
+    <h:outputStylesheet name="css/styles.css"/>
+</h:head>
+<h:body>
+    <header>
+        <h1>Ghost Net Fishing</h1>
+        <nav>
+            <h:link outcome="/index.xhtml" value="Start"/>
+            <h:link outcome="/geisternetzMelden.xhtml" value="Geisternetz melden"/>
+            <h:link outcome="/offeneNetze.xhtml" value="Offene Geisternetze"/>
+        </nav>
+    </header>
+    <main>
+        <h2>Melde jetzt dein Ghost Netz</h2>
+        <p>
+            Geisternetze sind verlorene Fischernetze, die im Meer treiben und der Umwelt erheblichen schaden zufügen.
+            Mit dieser Website kannst du gefundene Geisternetze melden und dich für die Bergung eintragen.
+        </p>
+        <ul>
+            <li>
+                <h:link outcome='/geisternetzMelden.xhtml' value="Geisternetz melden"/> - Ein neu entdecktes Geisternetz erfassen (auch anonym möglich)
+            </li>
+            <li><h:link outcome="/offeneNetze.xhtml" value="Offene Geisternetze ansehen"/> - Für eine Bergung eintragen, eine Bergung abschließen oder ein Netz als verschollen melden</li>
+        </ul>
+    </main>
+</h:body>
+</html>

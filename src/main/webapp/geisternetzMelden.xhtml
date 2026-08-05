@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Ghost Net Fishing - Geisternetz melden</title>
+    <h:outputStylesheet name="css/styles.css"/>
+</h:head>
+<h:body>
+    <header>
+        <h1>Ghost Net Fishing</h1>
+        <nav>
+            <h:link outcome="/index.xhtml" value="Start"/>
+            <h:link outcome="/geisternetzMelden.xhtml" value="Geisternetz melden"/>
+            <h:link outcome="/offeneNetze.xhtml" value="Offene Geisternetze"/>
+        </nav>
+    </header>
+    <main>
+        <h:messages globalOnly="false" styleClass="messages" layout="table"/>
+
+        <h2>Geisternetz melden</h2>
+
+        <h:form id="meldenForm">
+            <div class="form-row">
+                <h:outputLabel for="breitengrad" value="Breitengrad (Latitude)"/>
+                <h:inputText id="breitengrad" value="#{geisternetzMeldenBean.breitengrad}" required="true"
+                             requiredMessage="Bitte einen Breitengrad angeben."/>
+            </div>
+            <div class="form-row">
+                <h:outputLabel for="längengrad" value="Längengrad (Longitude)"/>
+                <h:inputText id="längengrad" value="#{geisternetzMeldenBean.längengrad}" required="true"
+                             requiredMessage="Bitte einen Längengrad angeben."/>
+            </div>
+            <div class="form-row">
+                <h:outputLabel for="größe" value="Geschätzte Größe"/>
+                <h:selectOneMenu id="größe" value="#{geisternetzMeldenBean.geschätzteGröße}">
+                    <f:selectItems value="#{geisternetzMeldenBean.verfügbareGrößen}" var="größe"
+                                   itemLabel="#{größe.bezeichnung}" itemValue="#{größe}"/>
+                </h:selectOneMenu>
+            </div>
+
+            <div class="form-row">
+                <h:outputLabel for="anonym" value="Anonym melden"/>
+                <h:selectBooleanCheckbox id="anonym" value="#{geisternetzMeldenBean.anonym}"/>
+            </div>
+            <h:panelGroup rendered="#{not geisternetzMeldenBean.anonym}">
+                <div class='form-row'>
+                    <h:outputLabel for="melderName" value="Name"/>
+                    <h:inputText id="melderName" value="#{geisternetzMeldenBean.melderName}"/>
+                </div>
+                <div class="form-row">
+                    <h:outputLabel for="melderTelefonnummer" value="Telefonnummer für Rückfragen"/>
+                    <h:inputText id="melderTelefonnummer" value="#{geisternetzMeldenBean.melderTelefonnummer}"/>
+                </div>
+            </h:panelGroup>
+
+            <h:commandButton value="Geisternetz melden" action="#{geisternetzMeldenBean.melden}"/>
+        </h:form>
+    </main>
+</h:body>
+</html>
